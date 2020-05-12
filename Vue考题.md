@@ -48,6 +48,52 @@ computed: {
 ## VueRouter 你怎么用？
 背下文档第一句：Vue Router 是 Vue.js 官方的路由管理器。
 说出核心概念的名字和作用：History 模式/导航守卫/路由懒加载
-说出常用 API：router-link/router-view/this.$router.push/this.$router.replace/this.$route.params
+说出常用 API：router-link/router-view/this.$router.push/this.$router.replace/
+this.$route.params
 this.$router.push('/user-admin')
 this.$route.params
+
+**router-link**
+组件支持用户在具有路由功能的应用中 (点击) 导航。 通过 to 属性指定目标地址，默认渲染成带有正确链接的 <a> 标签，可以通过配置 tag 属性生成别的标签.。另外，当目标路由成功激活时，链接元素自动设置一个表示激活的 CSS 类名。
+
+<router-link> 比起写死的 <a href="..."> 会好一些，理由如下：
+
+- 无论是 HTML5 history 模式还是 hash 模式，它的表现行为一致，所以，当你要切换路由模式，或者在 IE9 降级使用 hash 模式，无须作任何变动。
+- 在 HTML5 history 模式下，router-link 会守卫点击事件，让浏览器不再重新加载页面。
+- 当你在 HTML5 history 模式下使用 base 选项之后，所有的 to 属性都不需要写 (基路径) 了。
+
+**router-view**
+<router-view> 组件是一个 functional 组件，渲染路径匹配到的视图组件。<router-view> 渲染的组件还可以内嵌自己的 <router-view>，根据嵌套路径，渲染嵌套组件。
+
+- router-view 有一个 name 属性，默认值是 default。如果 <router-view>设置了名称，则会渲染对应的路由配置中 components 下的相应组件。
+
+**Router 构建选项**
+```
+export default new Router({
+  mode: 'history',
+  routes: [{},{}]
+})
+```
+
+- mode
+hash: 使用 URL hash 值来作路由。支持所有浏览器，包括不支持 HTML5 History Api 的浏览器.
+history: 依赖 HTML5 History API 和服务器配置。
+
+- base
+类型: string
+
+默认值: "/"
+
+应用的基路径。例如，如果整个单页应用服务在 /app/ 下，然后 base 就应该设为 "/app/"。
+
+- 其他
+this.$router
+
+router 实例。
+
+this.$route
+
+当前激活的路由信息对象。这个属性是只读的，里面的属性是 immutable (不可变) 的，不过你可以 watch (监测变化) 它。
+
+#增加的组件配置
+
